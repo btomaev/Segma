@@ -41,7 +41,7 @@ void setup() {
   display.begin();                              // initializing the display
   display.setScreen(helloScreen);               // setting up the screen function
   display.setSpecScreen(specScreen);            // setting up the screen function for special characters
-  //display.setStepDelay(1000);                 // delay between characters drawing in microseconds (for gas-discharge and fluorescent indicators)
+  //display.setStepDelay(1000);                 // delay between drawing characters in microseconds (for gas-discharge and fluorescent indicators)
 }
 
 void loop() {

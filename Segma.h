@@ -47,7 +47,7 @@ class Display {
 
     void setSpec(int specid, bool value);
 
-    void setSymbol(int number, byte value);
+    void setSymbol(int number, char value);
 
     void setScreen(void (*screen)());
 

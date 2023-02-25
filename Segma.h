@@ -19,6 +19,7 @@ class Display {
     bool greedInversion;
     bool symbolsShiftOrder = LSBFIRST;
     bool greedShiftOrder = MSBFIRST;
+    int stepDelay;
     
     void (*doScreen)();
     void (*doSpec)();
@@ -37,12 +38,16 @@ class Display {
     void update();
 
     void setShiftOrder(bool _symbolsShiftOrder, bool _greedShiftOrder);
+    
+    void setStepDelay(int delay); // microseconds
 
     void setFont(int _specials[], char _symbolsFont[], int _fontLength);
 
     void setText(String text);
 
     void setSpec(int specid, bool value);
+
+    void setSymbol(int number, byte value);
 
     void setScreen(void (*screen)());
 

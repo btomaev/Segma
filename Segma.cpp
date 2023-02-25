@@ -84,7 +84,7 @@ void Display::update() {
     digitalWrite(this->greedLatch, LOW);
     digitalWrite(this->symbolLatch, LOW);
 
-    delay(1);
+    delayMicroseconds(this->stepDelay);
     
     for(int j=0; j<this->registersCount; j++){
       shiftOut(this->greedData, this->greedClock, this->greedShiftOrder, this->greedShiftOrder == MSBFIRST ? highByte(target << 8*j) : lowByte(target >> 8*j));
@@ -104,6 +104,10 @@ void Display::setShiftOrder(bool _symbolsShiftOrder, bool _greedShiftOrder) {
   this->greedShiftOrder = _greedShiftOrder;
 }
 
+void Display::setStepDelay(int delay) {
+  this->stepDelay = delay;
+}
+
 void Display::setFont(int _specials[], char _symbolsFont[], int _fontLength) {
   this->specials = _specials;
   this->symbolsFont = _symbolsFont;
@@ -121,6 +125,10 @@ void Display::setText(String text) {
 void Display::setSpec(int specid, bool value) {
   bitWrite(this->specs, specials[specid], value);
   this->symbols[this->specPosition] = this->specs;
+}
+
+void Display::setSymbol(int number, char value) {
+  this->symbols[number] = value;
 }
 
 void Display::setScreen(void (*screen)()) {

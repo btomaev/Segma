@@ -39,7 +39,7 @@ class Display {
 
     void setShiftOrder(bool _symbolsShiftOrder, bool _greedShiftOrder);
     
-    void setStepDelay(int delay); // microseconds
+    void setStepDelay(int delay); // in microseconds
 
     void setFont(int _specials[], char _symbolsFont[], int _fontLength);
 

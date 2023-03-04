@@ -3,7 +3,7 @@
 
 void static blankScreen(){}
 
-Display::Display(int sl, int sd, int sc, int gl, int gd, int gc, int count, int spec, int regs, bool si, bool gi) {
+Display::Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint spec, uint regs, bool si, bool gi) {
   this->symbolLatch = sl;
   this->symbolData = sd;
   this->symbolClock = sc;
@@ -22,7 +22,7 @@ Display::Display(int sl, int sd, int sc, int gl, int gd, int gc, int count, int 
   this->setSpecScreen(blankScreen);
 }
 
-Display::Display(int sl, int sd, int sc, int gl, int gd, int gc, int count, int spec, int regs, char _symbolsFont[], int _fontSize, bool si, bool gi) {
+Display::Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint spec, uint regs, char _symbolsFont[], uint _fontSize, bool si, bool gi) {
   this->symbolLatch = sl;
   this->symbolData = sd;
   this->symbolClock = sc;
@@ -41,7 +41,7 @@ Display::Display(int sl, int sd, int sc, int gl, int gd, int gc, int count, int 
   this->setSpecScreen(blankScreen);
 }
 
-Display::Display(int sl, int sd, int sc, int gl, int gd, int gc, int count, int spec, int regs, int _specials[], char _symbolsFont[], int _fontSize, bool si, bool gi) {
+Display::Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint spec, uint regs, uint _specials[], char _symbolsFont[], uint _fontSize, bool si, bool gi) {
   this->symbolLatch = sl;
   this->symbolData = sd;
   this->symbolClock = sc;
@@ -104,11 +104,11 @@ void Display::setShiftOrder(bool _symbolsShiftOrder, bool _greedShiftOrder) {
   this->greedShiftOrder = _greedShiftOrder;
 }
 
-void Display::setStepDelay(int delay) {
+void Display::setStepDelay(uint delay) {
   this->stepDelay = delay;
 }
 
-void Display::setFont(int _specials[], char _symbolsFont[], int _fontLength) {
+void Display::setFont(uint _specials[], char _symbolsFont[], uint _fontLength) {
   this->specials = _specials;
   this->symbolsFont = _symbolsFont;
   this->fontLength = _fontLength;
@@ -122,12 +122,12 @@ void Display::setText(String text) {
   this->symbols[this->specPosition] = this->specs;
 }
 
-void Display::setSpec(int specid, bool value) {
+void Display::setSpec(uint specid, bool value) {
   bitWrite(this->specs, specials[specid], value);
   this->symbols[this->specPosition] = this->specs;
 }
 
-void Display::setSymbol(int number, char value) {
+void Display::setSymbol(uint number, char value) {
   this->symbols[number] = value;
 }
 
@@ -140,7 +140,6 @@ void Display::setSpecScreen(void (*screen)()) {
 }
 
 byte Display::getSymbolCode(char symbol) {
-
   for(int i=0; i<this->fontLength; i+=2) {
     if(this->symbolsFont[i]==symbol) return this->symbolsFont[i+1];
   }

@@ -1,4 +1,4 @@
-int default_specs[8] = {0,6,4};
+uint default_specs[8] = {0,6,4};
 
 char default_symbols_font[] = {
   ' ',0b00000000,

@@ -4,34 +4,34 @@
 
 class Display {
   private:
-    int symbolLatch;
-    int symbolData;
-    int symbolClock;
-    int greedLatch;
-    int greedData;
-    int greedClock;
-    int symbolsCount;
-    int specPosition;
-    int registersCount;
+    uint symbolLatch;
+    uint symbolData;
+    uint symbolClock;
+    uint greedLatch;
+    uint greedData;
+    uint greedClock;
+    uint symbolsCount;
+    uint specPosition;
+    uint registersCount;
     char symbols[32];
     byte specs;
     bool symbolInversion;
     bool greedInversion;
     bool symbolsShiftOrder = LSBFIRST;
     bool greedShiftOrder = MSBFIRST;
-    int stepDelay;
+    uint stepDelay;
     
     void (*doScreen)();
     void (*doSpec)();
 
-    int fontLength = 0;
-    int* specials;
+    uint fontLength = 0;
+    uint* specials;
     char* symbolsFont;
 
   public:
-    Display(int sl, int sd, int sc, int gl, int gd, int gc, int count, int spec, int regs, bool si=false, bool gi=false);
-    Display(int sl, int sd, int sc, int gl, int gd, int gc, int count, int spec, int regs, char _symbolsFont[], int _fontSize, bool si=false, bool gi=false);
-    Display(int sl, int sd, int sc, int gl, int gd, int gc, int count, int spec, int regs, int _specials[], char _symbolsFont[], int _fontSize, bool si=false, bool gi=false);
+    Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint spec, uint regs, bool si=false, bool gi=false);
+    Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint spec, uint regs, char _symbolsFont[], uint _fontSize, bool si=false, bool gi=false);
+    Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint spec, uint regs, uint _specials[], char _symbolsFont[], uint _fontSize, bool si=false, bool gi=false);
 
     void begin();
 
@@ -39,15 +39,15 @@ class Display {
 
     void setShiftOrder(bool _symbolsShiftOrder, bool _greedShiftOrder);
     
-    void setStepDelay(int delay); // in microseconds
+    void setStepDelay(uint delay); // in microseconds
 
-    void setFont(int _specials[], char _symbolsFont[], int _fontLength);
+    void setFont(uint _specials[], char _symbolsFont[], uint _fontLength);
 
     void setText(String text);
 
-    void setSpec(int specid, bool value);
+    void setSpec(uint specid, bool value);
 
-    void setSymbol(int number, char value);
+    void setSymbol(uint number, char value);
 
     void setScreen(void (*screen)());
 

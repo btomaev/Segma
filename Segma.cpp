@@ -3,7 +3,10 @@
 
 void static blankScreen(){}
 
+void maxCharactersError( void ) __attribute__((error("32 characters maximum!")));
+
 Display::Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint spec, uint regs, bool si, bool gi) {
+
   this->symbolLatch = sl;
   this->symbolData = sd;
   this->symbolClock = sc;
@@ -22,44 +25,6 @@ Display::Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint coun
   this->setSpecScreen(blankScreen);
 }
 
-Display::Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint spec, uint regs, char _symbolsFont[], uint _fontSize, bool si, bool gi) {
-  this->symbolLatch = sl;
-  this->symbolData = sd;
-  this->symbolClock = sc;
-  this->greedLatch = gl;
-  this->greedData = gd;
-  this->greedClock = gc;
-  this->symbolsCount = count;
-  this->specPosition = spec;
-  this->registersCount = regs;
-  this->symbolInversion = si;
-  this->greedInversion = gi;
-  this->specs = this->symbolInversion ? ~0b00000000 : 0b00000000;
-  
-  this->setFont(default_specs, _symbolsFont, _fontSize);
-  this->setScreen(blankScreen);
-  this->setSpecScreen(blankScreen);
-}
-
-Display::Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint spec, uint regs, uint _specials[], char _symbolsFont[], uint _fontSize, bool si, bool gi) {
-  this->symbolLatch = sl;
-  this->symbolData = sd;
-  this->symbolClock = sc;
-  this->greedLatch = gl;
-  this->greedData = gd;
-  this->greedClock = gc;
-  this->symbolsCount = count;
-  this->specPosition = spec;
-  this->registersCount = regs;
-  this->symbolInversion = si;
-  this->greedInversion = gi;
-  this->specs = this->symbolInversion ? ~0b00000000 : 0b00000000;
-  
-  this->setFont(_specials, _symbolsFont, _fontSize);
-  this->setScreen(blankScreen);
-  this->setSpecScreen(blankScreen);
-}
-
 void Display::begin() {
   pinMode(this->symbolLatch, OUTPUT);
   pinMode(this->symbolData, OUTPUT);
@@ -73,6 +38,10 @@ void Display::begin() {
 }
 
 void Display::update() {
+  if(millis()<this->lastFrame)return;
+
+  this->lastFrame = millis()+this->frameInterval;
+
   this->doSpec();
   this->doScreen();
   
@@ -137,6 +106,10 @@ void Display::setScreen(void (*screen)()) {
 
 void Display::setSpecScreen(void (*screen)()) {
   this->doSpec = *screen;
+}
+
+void Display::setFrameInterval(uint32_t interval) {
+  this->frameInterval = interval;
 }
 
 byte Display::getSymbolCode(char symbol) {

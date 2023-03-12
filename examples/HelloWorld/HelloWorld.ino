@@ -1,6 +1,6 @@
 #include <Segma.h>
 
-#define SYMBOLS_COUNT           14              // the number of characters on the screen (together with the special character)
+#define SYMBOLS_COUNT           14              // the number of characters on the screen (together with the special character). 32 max!
 #define SPECIAL_SYMBOL_NUMBER   0               // special character number
 #define GRID_REGISTERS_COUNT    2               // number of shift registers for grids
 
@@ -41,7 +41,12 @@ void setup() {
   display.begin();                              // initializing the display
   display.setScreen(helloScreen);               // setting up the screen function
   display.setSpecScreen(specScreen);            // setting up the screen function for special characters
+  display.setFrameInterval(10);                 // target frame interval (0 is unlimited)
   //display.setStepDelay(1000);                 // delay between drawing characters in microseconds (for gas-discharge and fluorescent indicators)
+  
+  /*
+  Total frame rate is approximately: 1000 / FrameInterval + SYMBOLS_COUNT * StepDelay / 1000
+  */
 }
 
 void loop() {

@@ -19,7 +19,9 @@ class Display {
     bool greedInversion;
     bool symbolsShiftOrder = LSBFIRST;
     bool greedShiftOrder = MSBFIRST;
-    uint stepDelay;
+    uint32_t stepDelay;
+    uint32_t frameInterval;
+    uint32_t lastFrame;
     
     void (*doScreen)();
     void (*doSpec)();
@@ -30,8 +32,6 @@ class Display {
 
   public:
     Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint spec, uint regs, bool si=false, bool gi=false);
-    Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint spec, uint regs, char _symbolsFont[], uint _fontSize, bool si=false, bool gi=false);
-    Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint spec, uint regs, uint _specials[], char _symbolsFont[], uint _fontSize, bool si=false, bool gi=false);
 
     void begin();
 
@@ -52,6 +52,8 @@ class Display {
     void setScreen(void (*screen)());
 
     void setSpecScreen(void (*screen)());
+
+    void setFrameInterval(uint32_t interval); // in milliseconds
 
     byte getSymbolCode(char symbol);
 };

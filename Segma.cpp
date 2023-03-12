@@ -5,7 +5,7 @@ void static blankScreen(){}
 
 void maxCharactersError( void ) __attribute__((error("32 characters maximum!")));
 
-Display::Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint regs, bool si, bool gi) {
+Display::Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint regs) {
 
   this->symbolLatch = sl;
   this->symbolData = sd;
@@ -15,8 +15,6 @@ Display::Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint coun
   this->greedClock = gc;
   this->symbolsCount = count;
   this->registersCount = regs;
-  this->symbolInversion = si;
-  this->greedInversion = gi;
   this->specs = this->symbolInversion ? ~0b00000000 : 0b00000000;
   
   this->setFont(default_specs, default_symbols_font, sizeof(default_symbols_font));
@@ -24,7 +22,7 @@ Display::Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint coun
   this->setSpecScreen(blankScreen);
 }
 
-Display::Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint spec, uint regs, bool si, bool gi) {
+Display::Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint spec, uint regs) {
 
   this->symbolLatch = sl;
   this->symbolData = sd;
@@ -35,8 +33,6 @@ Display::Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint coun
   this->symbolsCount = count;
   this->specPosition = spec;
   this->registersCount = regs;
-  this->symbolInversion = si;
-  this->greedInversion = gi;
   this->specs = this->symbolInversion ? ~0b00000000 : 0b00000000;
   this->hasSpec = true;
   
@@ -134,6 +130,14 @@ void Display::setSpecScreen(void (*screen)()) {
 
 void Display::setFrameInterval(uint32_t interval) {
   this->frameInterval = interval;
+}
+
+void Display::setSymbolInversion(bool value) {
+  this->symbolInversion = value;
+}
+
+void Display::setGreedInversion(bool value) {
+  this->greedInversion = value;
 }
 
 byte Display::getSymbolCode(char symbol) {

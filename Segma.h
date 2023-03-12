@@ -32,8 +32,8 @@ class Display {
     char* symbolsFont;
 
   public:
-    Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint regs, bool si=false, bool gi=false);
-    Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint spec, uint regs, bool si=false, bool gi=false);
+    Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint regs);
+    Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint spec, uint regs);
 
     void begin();
 
@@ -56,6 +56,10 @@ class Display {
     void setSpecScreen(void (*screen)());
 
     void setFrameInterval(uint32_t interval); // in milliseconds
+
+    void setSymbolInversion(bool value);
+
+    void setGreedInversion(bool value);
 
     byte getSymbolCode(char symbol);
 };

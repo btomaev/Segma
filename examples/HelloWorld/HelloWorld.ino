@@ -42,6 +42,8 @@ void setup() {
   display.setScreen(helloScreen);               // setting up the screen function
   display.setSpecScreen(specScreen);            // setting up the screen function for special characters
   display.setFrameInterval(10);                 // target frame interval (0 is unlimited)
+  display.setSymbolInversion(false);            // invert symbol bits (default false)
+  display.setGreedInversion(false);             // invert greed bits (default false)
   //display.setStepDelay(1000);                 // delay between drawing characters in microseconds (for gas-discharge and fluorescent indicators)
   
   /*

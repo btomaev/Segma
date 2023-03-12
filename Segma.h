@@ -15,6 +15,7 @@ class Display {
     uint registersCount;
     char symbols[32];
     byte specs;
+    bool hasSpec;
     bool symbolInversion;
     bool greedInversion;
     bool symbolsShiftOrder = LSBFIRST;
@@ -31,6 +32,7 @@ class Display {
     char* symbolsFont;
 
   public:
+    Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint regs, bool si=false, bool gi=false);
     Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint spec, uint regs, bool si=false, bool gi=false);
 
     void begin();

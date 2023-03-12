@@ -5,6 +5,25 @@ void static blankScreen(){}
 
 void maxCharactersError( void ) __attribute__((error("32 characters maximum!")));
 
+Display::Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint regs, bool si, bool gi) {
+
+  this->symbolLatch = sl;
+  this->symbolData = sd;
+  this->symbolClock = sc;
+  this->greedLatch = gl;
+  this->greedData = gd;
+  this->greedClock = gc;
+  this->symbolsCount = count;
+  this->registersCount = regs;
+  this->symbolInversion = si;
+  this->greedInversion = gi;
+  this->specs = this->symbolInversion ? ~0b00000000 : 0b00000000;
+  
+  this->setFont(default_specs, default_symbols_font, sizeof(default_symbols_font));
+  this->setScreen(blankScreen);
+  this->setSpecScreen(blankScreen);
+}
+
 Display::Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint count, uint spec, uint regs, bool si, bool gi) {
 
   this->symbolLatch = sl;
@@ -19,6 +38,7 @@ Display::Display(uint sl, uint sd, uint sc, uint gl, uint gd, uint gc, uint coun
   this->symbolInversion = si;
   this->greedInversion = gi;
   this->specs = this->symbolInversion ? ~0b00000000 : 0b00000000;
+  this->hasSpec = true;
   
   this->setFont(default_specs, default_symbols_font, sizeof(default_symbols_font));
   this->setScreen(blankScreen);
@@ -42,6 +62,7 @@ void Display::update() {
 
   this->lastFrame = millis()+this->frameInterval;
 
+  if(this->hasSpec)
   this->doSpec();
   this->doScreen();
   
@@ -86,12 +107,14 @@ void Display::setFont(uint _specials[], char _symbolsFont[], uint _fontLength) {
 void Display::setText(String text) {
   memset(this->symbols, 0, sizeof(this->symbols));
   text.toLowerCase();
+  if(this->hasSpec)
   text = text.substring(0,this->specPosition)+" "+text.substring(this->specPosition,32);
   text.toCharArray(symbols, 32);
   this->symbols[this->specPosition] = this->specs;
 }
 
 void Display::setSpec(uint specid, bool value) {
+  if(!this->hasSpec) return;
   bitWrite(this->specs, specials[specid], value);
   this->symbols[this->specPosition] = this->specs;
 }
@@ -105,6 +128,7 @@ void Display::setScreen(void (*screen)()) {
 }
 
 void Display::setSpecScreen(void (*screen)()) {
+  if(!this->hasSpec) return;
   this->doSpec = *screen;
 }
 

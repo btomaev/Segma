@@ -4,25 +4,25 @@
 
 class Display {
   private:
-    uint symbolLatch;
-    uint symbolData;
-    uint symbolClock;
-    uint greedLatch;
-    uint greedData;
-    uint greedClock;
-    uint symbolsCount;
-    uint specPosition;
-    uint registersCount;
-    char symbols[32];
+    uint symbolLatch = 0;
+    uint symbolData = 0;
+    uint symbolClock = 0;
+    uint greedLatch = 0;
+    uint greedData = 0;
+    uint greedClock = 0;
+    uint symbolsCount = 0;
+    uint specPosition = 0;
+    uint registersCount = 0;
+    char symbols[32] = {};
     byte specs;
-    bool hasSpec;
-    bool symbolInversion;
-    bool greedInversion;
+    bool hasSpec = false;
+    bool symbolInversion = false;
+    bool greedInversion = false;
     bool symbolsShiftOrder = LSBFIRST;
     bool greedShiftOrder = MSBFIRST;
-    uint32_t stepDelay;
-    uint32_t frameInterval;
-    uint32_t lastFrame;
+    uint32_t stepDelay = 0;
+    uint32_t frameInterval = 0;
+    uint32_t lastFrame = 0;
     
     void (*doScreen)();
     void (*doSpec)();
@@ -51,6 +51,8 @@ class Display {
 
     void setSymbol(uint number, char value);
 
+    void setDot(uint number, bool value);
+
     void setScreen(void (*screen)());
 
     void setSpecScreen(void (*screen)());
@@ -62,4 +64,6 @@ class Display {
     void setGreedInversion(bool value);
 
     byte getSymbolCode(char symbol);
+
+    byte getSymbolFromScreenBuffer(uint position);
 };

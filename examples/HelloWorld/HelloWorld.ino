@@ -11,8 +11,11 @@
 #define GRID_DATA_PIN           10
 #define GRID_CLOCK_PIN          13
 
-bool blinkFlag;
-uint32_t specScreenTimer;
+bool blinkFlag = false;
+uint32_t mainScreenTimer = 0;
+uint32_t specScreenTimer = 0;
+uint16_t dotNumber = 0;
+bool dotState = true;
 
 Display display(SYMBOL_LATCH_PIN,
                 SYMBOL_DATA_PIN,
@@ -26,6 +29,15 @@ Display display(SYMBOL_LATCH_PIN,
 
 void helloScreen() {
   display.setText("hello");
+  if(millis() >= mainScreenTimer){
+    mainScreenTimer = millis()+100;
+    display.setDot(dotNumber, dotState);
+    dotNumber++;
+    if(dotNumber >= SYMBOLS_COUNT) {
+      dotNumber = 0;
+      dotState = !dotState;
+    }
+  }
 }
 
 void specScreen() {
